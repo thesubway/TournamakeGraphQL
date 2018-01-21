@@ -9,7 +9,7 @@ const {
   GraphQLInt,
   GraphQLSchema
 } = graphql;
-const _ = require('lodash');
+const axios = require('axios');
 
 //hardcode users:
 const users = [
@@ -38,7 +38,14 @@ const RootQuery = new GraphQLObjectType({
           //very important function in GraphQL
           //"oh, we're looking for user with id 23"
           //this function wants to return a user
-          return _.find(users, {id: args.id});
+
+          //`` is an ES6 template string
+          //and this is where we connect to the database server:
+          return axios.get(`http://localhost:3000/users/${args.id}`)
+          //graphql is going to wait for the promise to the request to resolve. then take it down to query
+          //.then(response => console.log(response)) // {data: {firstName: 'bill'}}
+          .then(resp => resp.data);
+          //so that the next .then(data => data) only gets the data back
       }
     }
   }
