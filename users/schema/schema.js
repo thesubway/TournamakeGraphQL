@@ -98,6 +98,16 @@ const mutation = new GraphQLObjectType({
         return axios.post('http://localhost:3000/tournaments', {name, format})
         .then(res => res.data);
       }
+    },
+    deleteTournament: {
+      type: TournamentType,
+      args: {
+        id: {type: GraphQLNonNull(GraphQLString)}
+      },
+      resolve(parent, {id}) {
+        return axios.delete(`http://localhost:3000/tournaments/${id}`)
+        .then(res => res.data);
+      }
     }
   }
 })
