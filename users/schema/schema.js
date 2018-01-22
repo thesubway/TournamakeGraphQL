@@ -8,7 +8,8 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLSchema,
-  GraphQLList
+  GraphQLList,
+  GraphQLNonNull
 } = graphql;
 const axios = require('axios');
 
@@ -82,7 +83,27 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addTournament: {
+      type: TournamentType,
+      args: {
+        //non-null, so those values the user MUST pass in
+        name: {type: GraphQLNonNull(GraphQLString)},
+        format: {type: GraphQLNonNull(GraphQLString)},
+        userId: {type: GraphQLString}
+      },
+      resolve(parentValue, {name, format}) {
+        return axios.post('http://localhost:3000/tournaments', {name, format})
+        .then(res => res.data);
+      }
+    }
+  }
+})
+
 //make it available
 module.exports = new GraphQLSchema({
-  query: RootQuery
+  query: RootQuery,
+  mutation
 });
