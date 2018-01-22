@@ -1,5 +1,11 @@
 {
+  "tournaments": [
+    { "id": "1", "name": "RockPaperScissors", "format": "Knockout", "userId": "40"},
+    { "id": "2", "name": "Ping Pong", "format": "Group Stage + knockout", "userId": "40"},
+    { "id": "3", "name": "Basketball", "format": "Knockout", "userId": "23"}
+  ],
   "users": [
+    { "id": "41", "firstName": "Nick", "age": 40},
     { "id": "23", "firstName": "Bill", "age": 20},
     { "id": "40", "firstName": "Alex", "age": 40}
   ]
