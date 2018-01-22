@@ -27,6 +27,21 @@ const UserType = new GraphQLObjectType({
   }
 });
 
+const TournamentType = new GraphQLObjectType({
+  name: 'Tournament',
+  fields: {
+    id: {type: GraphQLString},
+    name: {type: GraphQLString},
+    format: {type: GraphQLString},
+    user: {type: UserType,
+      resolve(parentValue, args) {
+        return axios.get(`http://localhost:3000/users/${parentValue.userId}`)
+        .then(res => res.data)
+      }
+    }
+  }
+});
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -46,6 +61,14 @@ const RootQuery = new GraphQLObjectType({
           //.then(response => console.log(response)) // {data: {firstName: 'bill'}}
           .then(resp => resp.data);
           //so that the next .then(data => data) only gets the data back
+      }
+    },
+    tournament: {
+      type: TournamentType,
+      args: {id: {type: GraphQLString}},
+      resolve(parentValue, args) {
+        return axios.get(`http://localhost:3000/tournaments/${args.id}`)
+        .then(resp => resp.data);
       }
     }
   }
