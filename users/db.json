@@ -2,7 +2,7 @@
   "tournaments": [
     {
       "id": "1",
-      "name": "RockPaperScissors",
+      "name": "RockPaperScissors2",
       "format": "Knockout",
       "userId": "40"
     },
